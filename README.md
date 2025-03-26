@@ -13,6 +13,7 @@
     "id": 1,
     "todo": "할일",
     "writer": "작성자명",
+    "date": "오늘날짜",
     "create": "YYYY-MM-DD HH-MM-SS"
   }
 
@@ -28,6 +29,7 @@
     "id":1,
     "todo":"할일",
     "writer": "작성자명",
+    "date": "오늘날짜", 
     "create": "YYYY-MM-DD HH-MM-SS"
     }
 
@@ -45,18 +47,21 @@
                 "id": 1,
                 "todo": "할일",
                 "writer": "작성자명",
+                "date": "오늘날짜",
                 "create": "YYYY-MM-DD HH-MM-SS"
             },
             {
                 "id": 2,
                 "todo": "할일2",
-                "nwriter": "작성자명2",
+                "writer": "작성자명2",
+                "data": "오늘날짜",
                 "create": "YYYY-MM-DD HH-MM-SS"
             },
             {
                 "id": 3,
                 "todo": "할일3",
                 "writer": "작성자명3",
+                "data": "오늘날짜",
                 "create": "YYYY-MM-DD HH-MM-SS"
             },
           ....
@@ -75,6 +80,7 @@
     "id":1,
     "todo":"할일",
     "writer": "작성자명",
+    "date": "오늘날짜",
     "create": "YYYY-MM-DD HH-MM-SS"
     "update": "YYYY-MM-DD HH-MM-SS"
     }
