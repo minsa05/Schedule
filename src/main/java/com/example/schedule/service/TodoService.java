@@ -4,12 +4,12 @@ import com.example.schedule.dto.DtoRequest;
 import com.example.schedule.dto.DtoResponse;
 import com.example.schedule.dto.DtoUpdateResponse;
 import com.example.schedule.entity.Todo;
+import com.example.schedule.exception.NotFoundException;
+import com.example.schedule.exception.PasswordException;
 import com.example.schedule.repository.TodoRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +28,7 @@ public class TodoService {
     public DtoResponse saveTodo(DtoRequest dtoRequest) {
         Todo todo = new Todo();
         todo.setWriter(dtoRequest.getWriter());
-        todo.setPassword(dtoRequest.getPassword()); // 저장은 하지만 보이지않게
+        todo.setPassword(dtoRequest.getPassword()); // 저장은 하지만 보이지 않게
         todo.setTodo(dtoRequest.getTodo());
         todo.setDate(dtoRequest.getDate());
 
@@ -42,7 +42,6 @@ public class TodoService {
                 savedTodo.getCreatedAt()
         );
     }
-
 
     // 전체 일정 조회
     @Transactional(readOnly = true)
@@ -62,7 +61,7 @@ public class TodoService {
     @Transactional(readOnly = true)
     public DtoResponse findTodoById(Long id) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException("일정이 존재하지 않습니다."));
 
         return new DtoResponse( // 출력
                 todo.getId(),
@@ -77,7 +76,11 @@ public class TodoService {
     @Transactional
     public DtoUpdateResponse updateTodoById(Long id, DtoRequest dtoRequest) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException("일정이 존재하지 않습니다."));
+
+        if (!todo.getPassword().equals(dtoRequest.getPassword())) {
+            throw new PasswordException("비밀번호가 일치하지 않습니다.");
+        }
 
         todo.setWriter(dtoRequest.getWriter());
         todo.setTodo(dtoRequest.getTodo());
@@ -92,15 +95,19 @@ public class TodoService {
                 updatedTodo.getDate(),
                 updatedTodo.getCreatedAt(),
                 updatedTodo.getUpdatedAt()
+
         );
     }
 
-
     // 일정 삭제
     @Transactional
-    public void deleteTodoById(Long id) {
+    public void deleteTodoById(Long id, String password) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException("일정이 존재하지 않습니다."));
+
+        if (!todo.getPassword().equals(password)) {
+            throw new PasswordException("비밀번호가 일치하지 않습니다.");
+        }
         todoRepository.delete(todo);
     }
 }

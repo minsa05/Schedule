@@ -41,9 +41,8 @@ public class Controller {
 
     // 4. 일정 수정
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> updateTodoById(@PathVariable Long id, @RequestBody DtoRequest dto) {
-        DtoUpdateResponse updated = service.updateTodoById(id, dto);
-
+    public ResponseEntity<Map<String, Object>> updateTodoById(@PathVariable Long id, @RequestBody DtoRequest dtoRequest) {
+        DtoUpdateResponse updated = service.updateTodoById(id, dtoRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("message", "일정이 수정되었습니다.");
         response.put("data", updated);
@@ -53,8 +52,8 @@ public class Controller {
 
     // 5. 일정 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTodo(@PathVariable Long id) {
-        service.deleteTodoById(id);
+    public ResponseEntity<String> deleteTodo(@PathVariable Long id, @RequestParam("password") String password) {
+        service.deleteTodoById(id, password);
         return ResponseEntity.ok("일정 (ID = " + id + ") 삭제 되었습니다.");
     }
 }

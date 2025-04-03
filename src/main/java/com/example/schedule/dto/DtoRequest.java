@@ -1,7 +1,9 @@
 package com.example.schedule.dto;
 
 import lombok.Data;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data

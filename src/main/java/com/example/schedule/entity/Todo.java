@@ -4,11 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public class Todo {
 
@@ -20,6 +23,13 @@ public class Todo {
     private String todo;
     private Date date;
 
+    @PrePersist
+    public void prePersist() {
+        if (this.date == null) {
+            this.date = new Date();
+        }
+    }
+
     @Column(nullable = true)
     private String password;
 
@@ -28,6 +38,6 @@ public class Todo {
     @Column(updatable = false)  //  수정되지 않도록 설정
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp         //  수정될 때마다 자동으로 시간 갱신
+    @LastModifiedDate      //  수정될 때마다 자동으로 시간 갱신
     private LocalDateTime updatedAt;
 }
