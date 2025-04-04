@@ -9,7 +9,6 @@ import com.example.schedule.exception.PasswordException;
 import com.example.schedule.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,13 +27,13 @@ public class TodoService {
     public DtoResponse saveTodo(DtoRequest dtoRequest) {
         Todo todo = new Todo();
         todo.setWriter(dtoRequest.getWriter());
-        todo.setPassword(dtoRequest.getPassword()); // 저장은 하지만 보이지 않게
+        todo.setPassword(dtoRequest.getPassword());
         todo.setTodo(dtoRequest.getTodo());
         todo.setDate(dtoRequest.getDate());
 
         Todo savedTodo = todoRepository.save(todo);
 
-        return new DtoResponse( // 출력
+        return new DtoResponse(
                 savedTodo.getId(),
                 savedTodo.getWriter(),
                 savedTodo.getTodo(),
@@ -47,7 +46,7 @@ public class TodoService {
     @Transactional(readOnly = true)
     public List<DtoResponse> findAllTodo() {
         return todoRepository.findAll().stream()
-                .map(todo -> new DtoResponse( // 출력
+                .map(todo -> new DtoResponse(
                         todo.getId(),
                         todo.getWriter(),
                         todo.getTodo(),
@@ -62,8 +61,7 @@ public class TodoService {
     public DtoResponse findTodoById(Long id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("일정이 존재하지 않습니다."));
-
-        return new DtoResponse( // 출력
+        return new DtoResponse(
                 todo.getId(),
                 todo.getWriter(),
                 todo.getTodo(),
@@ -85,21 +83,20 @@ public class TodoService {
         todo.setWriter(dtoRequest.getWriter());
         todo.setTodo(dtoRequest.getTodo());
 
+
         if (dtoRequest.getDate() != null) {
             todo.setDate(dtoRequest.getDate());
         }
 
-
         Todo updatedTodo = todoRepository.save(todo);
 
-        return new DtoUpdateResponse( // 출력
+        return new DtoUpdateResponse(
                 updatedTodo.getId(),
                 updatedTodo.getWriter(),
                 updatedTodo.getTodo(),
                 updatedTodo.getDate(),
                 updatedTodo.getCreatedAt(),
                 updatedTodo.getUpdatedAt()
-
         );
     }
 
