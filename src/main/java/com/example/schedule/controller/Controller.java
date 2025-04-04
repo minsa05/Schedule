@@ -44,8 +44,13 @@ public class Controller {
     public ResponseEntity<Map<String, Object>> updateTodoById(@PathVariable Long id, @RequestBody DtoRequest dtoRequest) {
         DtoUpdateResponse updated = service.updateTodoById(id, dtoRequest);
         Map<String, Object> response = new HashMap<>();
+        response.put("id", updated.getId());
+        response.put("todo", updated.getTodo());
+        response.put("writer", updated.getWriter());
+        response.put("date", updated.getDate());
+        response.put("create", updated.getCreatedAt());
+        response.put("update", updated.getUpdatedAt());
         response.put("message", "일정이 수정되었습니다.");
-        response.put("data", updated);
 
         return ResponseEntity.ok(response);
     }

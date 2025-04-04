@@ -24,7 +24,7 @@ public class Todo {
     private Date date;
 
     @PrePersist
-    public void prePersist() {
+    public void prePersist() { // date가 null인경우 현재날짜로
         if (this.date == null) {
             this.date = new Date();
         }

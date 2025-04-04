@@ -84,7 +84,11 @@ public class TodoService {
 
         todo.setWriter(dtoRequest.getWriter());
         todo.setTodo(dtoRequest.getTodo());
-        todo.setDate(dtoRequest.getDate());
+
+        if (dtoRequest.getDate() != null) {
+            todo.setDate(dtoRequest.getDate());
+        }
+
 
         Todo updatedTodo = todoRepository.save(todo);
 

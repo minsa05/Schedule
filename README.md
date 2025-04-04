@@ -11,10 +11,10 @@
   ```json
   {
     "id": 1,
+   "writer": "작성자명"
     "todo": "할일",
-    "writer": "작성자명",
     "date": "오늘날짜",
-    "create": "YYYY-MM-DD HH-MM-SS"
+    "createdAt": "YYYY-MM-DD HH-MM-SS"
   }
 
 ### 2) 일정 단일 조회
@@ -27,8 +27,8 @@
     ```json
    {
     "id":1,
-    "todo":"할일",
     "writer": "작성자명",
+    "todo":"할일",
     "date": "오늘날짜", 
     "create": "YYYY-MM-DD HH-MM-SS"
     }
@@ -37,36 +37,36 @@
 
 - **Method**: `GET`
 - URL: `/todos`
-- 설명:전체 일정 조회
-    - **reponse 예시**:
+  - 설명:전체 일정 조회
+      - **reponse 예시**:
 
-        ```json
-       {
-          [
-            {
-                "id": 1,
-                "todo": "할일",
-                "writer": "작성자명",
-                "date": "오늘날짜",
-                "create": "YYYY-MM-DD HH-MM-SS"
-            },
-            {
-                "id": 2,
-                "todo": "할일2",
-                "writer": "작성자명2",
-                "data": "오늘날짜",
-                "create": "YYYY-MM-DD HH-MM-SS"
-            },
-            {
-                "id": 3,
-                "todo": "할일3",
-                "writer": "작성자명3",
-                "data": "오늘날짜",
-                "create": "YYYY-MM-DD HH-MM-SS"
-            },
-          ....
-          ]
-        }
+          ```json
+         {
+            [
+              {
+                  "id": 1,
+                  "todo": "할일1",
+                  "writer": "작성자명",
+                  "date": "오늘날짜",
+                  "createdAt": "YYYY-MM-DD HH-MM-SS"
+              },
+              {
+                  "id": 2,
+                  "writer": "작성자명2",
+                  "todo": "할일2",
+                  "data": "오늘날짜",
+                  "createdAt": "YYYY-MM-DD HH-MM-SS"
+              },
+              {
+                  "id": 3,
+                  "writer": "작성자명3",
+                  "todo": "할일3",
+                  "data": "오늘날짜",
+                  "createdAt": "YYYY-MM-DD HH-MM-SS"
+              },
+            ....
+            ]
+          }
 
 ### 4) 일정 수정
 
@@ -78,11 +78,12 @@
     ```json
    {
     "id":1,
-    "todo":"할일",
-    "writer": "작성자명",
-    "date": "오늘날짜",
+    "todo":"수정할 내용",
+    "date": "YYYY-MM-DD",
     "create": "YYYY-MM-DD HH-MM-SS"
     "update": "YYYY-MM-DD HH-MM-SS"
+    "writer": "수정할 이름",
+    "message":"일정이 수정되었습니다."
     }
 
 ### 5) 일정 삭제
